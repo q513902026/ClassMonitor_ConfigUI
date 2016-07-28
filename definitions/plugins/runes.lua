@@ -1,147 +1,153 @@
--- Runes plugin (based on fRunes by Krevlorne [https://github.com/Krevlorne])
 local ADDON_NAME, Engine = ...
-if not Engine.Enabled then return end
-local UI = Engine.UI
 
-if UI.MyClass ~= "DEATHKNIGHT" then return end -- only for DK
+local L = Engine.Locales
+local D = Engine.Definitions
 
-local PixelPerfect = Engine.PixelPerfect
-local DefaultBoolean = Engine.DefaultBoolean
-local GetColor = Engine.GetColor
+local orientationValues = {
+	["HORIZONTAL"] = L.RunesOrientationHorizontal,
+	["VERTICAL"] = L.RunesOrientationVertical,
+}
+local function GetOrientationValues()
+	return orientationValues
+end
 
---
-local plugin = Engine:NewPlugin("RUNES")
-
-local DefaultColors = {
-	{ 0.69, 0.31, 0.31, 1 }, -- Blood
-	{ 0.31, 0.45, 0.63, 1 }, -- Frost
-	{ 0.33, 0.59, 0.33, 1 }, -- Death
+local runesValues = {
+	["1"] = L.RunesBlood.."1",
+	["2"] = L.RunesBlood.."2",
+	["3"] = L.RunesUnholy.."1",
+	["4"] = L.RunesUnholy.."2",
+	["5"] = L.RunesFrost.."1",
+	["6"] = L.RunesFrost.."2",
 }
 
--- own methods
-function plugin:UpdateVisibility(event)
-	local inCombat = true
-	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
-		inCombat = true
-	else
-		inCombat = false
+local function GetRunemap(info)
+	local section = info.arg.section
+	local option = info[#info]
+	if option == "slot1" then
+		value = tostring(section[info.arg.key][1])
+	elseif option == "slot2" then
+		value = tostring(section[info.arg.key][2])
+	elseif option == "slot3" then
+		value = tostring(section[info.arg.key][3])
+	elseif option == "slot4" then
+		value = tostring(section[info.arg.key][4])
+	elseif option == "slot5" then
+		value = tostring(section[info.arg.key][5])
+	elseif option == "slot6" then
+		value = tostring(section[info.arg.key][6])
 	end
-	if self.settings.autohide == false or inCombat then
-		--UIFrameFadeIn(self, (0.3 * (1-self.frame:GetAlpha())), self.frame:GetAlpha(), 1)
-		self.frame:Show()
-		self.timeSinceLastUpdate = GetTime()
-		self:RegisterUpdate(plugin.Update)
-	else
-		--UIFrameFadeOut(self, (0.3 * (0+self.frame:GetAlpha())), self.frame:GetAlpha(), 0)
-		self.frame:Hide()
-		self:UnregisterUpdate()
+--print("GetRunemap:"..tostring(option).."  "..table.concat(section[info.arg.key],",").."  "..tostring(value))
+	return value
+end
+
+local function SetRunemap(info, value)
+	local section = info.arg.section
+	local option = info[#info]
+	if option == "slot1" then
+		section[info.arg.key][1] = tonumber(value)
+	elseif option == "slot2" then
+		section[info.arg.key][2] = tonumber(value)
+	elseif option == "slot3" then
+		section[info.arg.key][3] = tonumber(value)
+	elseif option == "slot4" then
+		section[info.arg.key][4] = tonumber(value)
+	elseif option == "slot5" then
+		section[info.arg.key][5] = tonumber(value)
+	elseif option == "slot6" then
+		section[info.arg.key][6] = tonumber(value)
 	end
+	D.Helpers.SaveValue(info.arg.section, info, section[info.arg.key])
+--print("SetRunemap:"..tostring(option).."  "..table.concat(section[info.arg.key],",").."  "..tostring(value))
 end
 
-function plugin:Update(elapsed)
-	self.timeSinceLastUpdate = self.timeSinceLastUpdate + elapsed
-	if self.timeSinceLastUpdate > self.settings.updatethreshold then
-		local runesReady = 0
-		for i = 1, self.count do
-			local runeIndex = self.settings.runemap[i]
-			local start, duration, finished = GetRuneCooldown(runeIndex)
+local runeMap = {
+	key = "runemap",
+	name = L.RunesRunemap,
+	desc = L.RunesRunemapDesc,
+	type = "group",
+	guiInline = true,
+	get = GetRunemap,
+	set = SetRunemap,
+	args = {
+		slot1 = {
+			order = 1,
+			name = string.format(L.RunesSlot, 1),
+			desc = string.format(L.RunesSlotDesc, 1),
+			type = "select",
+			values = runesValues,
+		},
+		slot2 = {
+			order = 2,
+			name = string.format(L.RunesSlot, 2),
+			desc = string.format(L.RunesSlotDesc, 2),
+			type = "select",
+			values = runesValues,
+		},
+		slot3 = {
+			order = 3,
+			name = string.format(L.RunesSlot, 3),
+			desc = string.format(L.RunesSlotDesc, 3),
+			type = "select",
+			values = runesValues,
+		},
+		slot4 = {
+			order = 4,
+			name = string.format(L.RunesSlot, 4),
+			desc = string.format(L.RunesSlotDesc, 4),
+			type = "select",
+			values = runesValues,
+		},
+		slot5 = {
+			order = 5,
+			name = string.format(L.RunesSlot, 5),
+			desc = string.format(L.RunesSlotDesc, 5),
+			type = "select",
+			values = runesValues,
+		},
+		slot6 = {
+			order = 6,
+			name = string.format(L.RunesSlot, 6),
+			desc = string.format(L.RunesSlotDesc, 6),
+			type = "select",
+			values = runesValues,
+		}
+	}
+}
 
-			local rune = self.runes[i]
-			rune.status:SetMinMaxValues(0, duration)
+local colors = D.Helpers.CreateColorsDefinition("colors", 4, {L.RunesBlood, L.RunesUnholy, L.RunesFrost, L.RunesDeath} )
 
-			if finished then
-				rune.status:SetValue(duration)
-			else
-				rune.status:SetValue(GetTime() - start)
-			end
-		end
-		self.timeSinceLastUpdate = 0
-	end
-end
+local options = {
+	[1] = D.Helpers.Description,
+	[2] = D.Helpers.Name,
+	[3] = D.Helpers.DisplayName,
+	[4] = D.Helpers.Kind,
+	[5] = D.Helpers.Enabled,
+	[6] = D.Helpers.Autohide,
+	[7] = D.Helpers.WidthAndHeight,
+	[8] = {
+		key = "updatethreshold",
+		name = L.Threshold,
+		desc = L.RunesThresholdDesc,
+		type = "range",
+		min = 0.1, max = 1, step = 0.1,
+		get = D.Helpers.GetValue,
+		set = D.Helpers.SetValue,
+		disabled = D.Helpers.IsPluginDisabled
+	},
+	[9] = {
+		key = "orientation",
+		name = L.RunesOrientation,
+		desc = L.RunesOrientationDesc,
+		type = "select",
+		values = GetOrientationValues,
+		get = D.Helpers.GetValue,
+		set = D.Helpers.SetValue,
+		disabled = D.Helpers.IsPluginDisabled
+	},
+	[10] = runeMap,
+	[11] = colors,
+	[12] = D.Helpers.Anchor,
+	[13] = D.Helpers.AutoGridAnchor,
+}
 
-function plugin:UpdateGraphics()
-	-- Create a frame including every runes
-	local frame = self.frame
-	if not frame then
-		frame = CreateFrame("Frame", self.name, UI.PetBattleHider)
-		frame:Hide()
-		self.frame = frame
-	end
-	local frameWidth = self:GetWidth()
-	local height = self:GetHeight()
-	frame:ClearAllPoints()
-	frame:Point(unpack(self:GetAnchor()))
-	frame:Size(frameWidth, height)
-	-- Create runes
-	local width, spacing = PixelPerfect(frameWidth, self.count)
-	self.runes = self.runes or {}
-	for i = 1, self.count do
-		local rune = self.runes[i]
-		if not rune then
-			rune = CreateFrame("Frame", nil, self.frame)
-			rune:SetTemplate()
-			rune:SetFrameStrata("BACKGROUND")
-			self.runes[i] = rune
-		end
-		rune:Size(width, height)
-		rune:ClearAllPoints()
-		if i == 1 then
-			rune:Point("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
-		else
-			rune:Point("LEFT", self.runes[i-1], "RIGHT", spacing, 0)
-		end
-		if not rune.status then
-			rune.status = CreateFrame("StatusBar", nil, rune)
-			rune.status:SetStatusBarTexture(UI.NormTex)
-			rune.status:SetFrameLevel(6)
-			rune.status:SetInside()
-			rune.status:SetMinMaxValues(0, 10)
-		end
-		local specIndex = GetSpecialization()
-		local color = GetColor(self.settings.colors[specIndex])
-		rune.status:SetStatusBarColor(unpack(color))
-		rune.status:SetOrientation(self.settings.orientation)
-	end
-end
-
--- overridden methods
-function plugin:Initialize()
-	-- set defaults
-	self.settings.updatethreshold = self.settings.updatethreshold or 0.1
-	self.settings.orientation = self.settings.orientation or "HORIZONTAL"
-
-	self.settings.runemap = { 1, 2, 3, 4, 5, 6 }
-	self.settings.colors = self.settings.colors or DefaultColors
-	--
-	self.count = 6
-	--
-	self:UpdateGraphics()
-end
-
-function plugin:Enable()
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", plugin.UpdateVisibility)
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", plugin.UpdateVisibility)
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", plugin.UpdateVisibility)
-	
-	self:RegisterUnitEvent("PLAYER_SPECIALIZATION_CHANGED", "player", plugin.UpdateGraphics)
-end
-
-function plugin:Disable()
-	--
-	self:UnregisterAllEvents()
-	self:UnregisterUpdate()
-	--
-	self.frame:Hide()
-end
-
-function plugin:SettingsModified()
-	--
-	self:Disable()
-	--
-	self:UpdateGraphics()
-	--
-	if self:IsEnabled() then
-		self:Enable()
-		self:UpdateVisibility()
-	end
-end
+D.Helpers:NewPluginDefinition("RUNES", options, L.PluginShortDescription_RUNES, L.PluginDescription_RUNES)

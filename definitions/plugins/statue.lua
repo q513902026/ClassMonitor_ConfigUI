@@ -3,6 +3,7 @@ local ADDON_NAME, Engine = ...
 local L = Engine.Locales
 local D = Engine.Definitions
 
+local color = D.Helpers.CreateColorsDefinition("color", 1, {L.BarColor})
 local options = {
 	[1] = D.Helpers.Description,
 	[2] = D.Helpers.Name,
@@ -15,16 +16,15 @@ local options = {
 	[9] = {
 		key = "text",
 		name = L.TimeLeft,
-		desc = L.RechargeTextDesc,
+		desc = L.StatueTextDesc,
 		type = "toggle",
 		get = D.Helpers.GetValue,
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
-	[10] = D.Helpers.Spell,
-	-- TODO: colors
-	[12] = D.Helpers.Anchor,
-	[13] = D.Helpers.AutoGridAnchor,
+	[10] = color,
+	[11] = D.Helpers.Anchor,
+	[12] = D.Helpers.AutoGridAnchor,
 }
 
-D.Helpers:NewPluginDefinition("RECHARGE", options, L.PluginShortDescription_RECHARGE, L.PluginDescription_RECHARGE)
+D.Helpers:NewPluginDefinition("STATUE", options, L.PluginShortDescription_STATUE, L.PluginDescription_STATUE)

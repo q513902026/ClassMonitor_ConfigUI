@@ -73,6 +73,9 @@ L.FilterDesc = "Buff or debuff"
 L.FilterValueHelpful = "Buff"
 L.FilterValueHarmful = "Debuff"
 
+L.Reverse = "Reverse order"
+L.ReverseDesc = "Display from right to left instead of left to right"
+
 L.Unit = "Unit"
 L.UnitDesc = "Unit to monitor"
 L.UnitValuePlayer = "Player"
@@ -115,9 +118,11 @@ L.AuraCount = "Maximum stack count"
 L.AuraCountDesc = "Maximum stack count"
 L.AuraFilledDesc = "Stack filled or not"
 
-L.AurabarTextDesc = "Display current stack/maximum stack"
+L.AurabarTextDesc = "Display current stack count"
 L.AurabarDurationDesc = "Display aura time left"
 L.AurabarColor = "Bar color"
+L.AurabarShowspellname = "Aura name"
+L.AurabarShowspellnameDesc = "Display aura name"
 
 L.BanditsGuileShallow = GetSpellInfo(84745)
 L.BanditsGuileModerate = GetSpellInfo(84746)
@@ -175,12 +180,20 @@ L.RunesBlood = "Blood"
 L.RunesUnholy = "Unholy"
 L.RunesFrost = "Frost"
 L.RunesDeath = "Death"
+L.RunesOrientationHorizontal = "Horizontal"
+L.RunesOrientationVertical = "Vertical"
+L.RunesRunemap = "Runes order"
+L.RunesRunemapDesc = "Change runes order"
+L.RunesSlot = "Slot %d"
+L.RunesSlotDesc = "Choose rune in slot %d"
 
 L.StaggerThresholdDesc = "Above this value, health percentage is not displayed"
 L.StaggerTextDesc = "Display current stagger value"
 L.StaggerLight = GetSpellInfo(124275)
 L.StaggerModerate = GetSpellInfo(124274)
 L.StaggerHeavy = GetSpellInfo(124273)
+
+L.StatueTextDesc = "Display time left on statue/lightwell/ghoul/banner"
 
 L.TankshieldDurationDesc = "Display shield time left"
 
@@ -191,7 +204,7 @@ L.TotemsTextDesc = "Display time left on each totem/mushroom"
 L.PluginShortDescription_AURA = "Aura stacks"
 L.PluginDescription_AURA = "Display stacks for a buff/debuff"
 L.PluginShortDescription_AURABAR = "Aura bar"
-L.PluginDescription_AURABAR = "Display a bar with stack count, maximum and duration left for a buff or a debuff"
+L.PluginDescription_AURABAR = "Display a bar with stack count and duration left for a buff or a debuff"
 L.PluginShortDescription_RESOURCE = "Resource bar"
 L.PluginDescription_RESOURCE = "Display a bar with current class resource, changes automatically with specialization/form/stance"
 L.PluginShortDescription_COMBO = "Combo points"
@@ -226,3 +239,5 @@ L.PluginShortDescription_RECHARGEBAR = "Bar with recharge cooldown"
 L.PluginDescription_RECHARGEBAR = "Display a bar with current, max value and time left for cooldown with charges such as monk Roll or druid Savage defense"
 L.PluginShortDescription_CD = "Cooldown"
 L.PluginDescription_CD = "Display a bar with spell name and time left for cooldown"
+L.PluginShortDescription_STATUE = "Statue/Lightwell/Ghoul/Banner bar"
+L.PluginDescription_STATUE = "Display a bar with timeleft/uptime of monk statue, DK ghoul, priest lightwell and warrior's banner"

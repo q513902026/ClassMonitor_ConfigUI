@@ -13,7 +13,6 @@
 	<Script file="definitions\plugins\default.lua"/>
 
 	<Script file="definitions\plugins\aura.lua"/>
-	<Script file="definitions\plugins\arcane.lua"/>
 	<Script file="definitions\plugins\aurabar.lua"/>
 	<Script file="definitions\plugins\power.lua"/>
 	<Script file="definitions\plugins\combo.lua"/>

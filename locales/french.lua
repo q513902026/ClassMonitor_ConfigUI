@@ -73,6 +73,9 @@ if GetLocale() == "frFR" then
 	L.FilterValueHelpful = "Am\195\169lioration"
 	L.FilterValueHarmful = "Affaiblissement"
 
+	L.Reverse = "Order inverse"
+	L.ReverseDesc = "Affiche de droite \195\160 gauche \195\160 la place de gauche \195\160 droite"
+
 	L.Unit = "Unit\195\169"
 	L.UnitDesc = "Unit\195\169 \195\160 monitorer"
 	L.UnitValuePlayer = "Joueur"
@@ -114,8 +117,10 @@ if GetLocale() == "frFR" then
 	L.AuraCountDesc = "Nombre maximum de charges"
 	L.AuraFilledDesc = "Remplir la charge ou seulement afficher le bord"
 
-	L.AurabarTextDesc = "Affiche le nombre de charges actuels/nombre maximum de charges"
+	L.AurabarTextDesc = "Affiche le nombre de charges"
 	L.AurabarDurationDesc = "Afficher la dur\195\169e restant"
+	L.AurabarShowspellname = "Nom de l'aura"
+	L.AurabarShowspellnameDesc = "Afficher le nom de l'aura"
 
 	--L.BanditsGuileShallow = GetSpellInfo(84745)
 	--L.BanditsGuileModerate = GetSpellInfo(84746)
@@ -172,12 +177,18 @@ if GetLocale() == "frFR" then
 	L.RunesUnholy = "Impie"
 	L.RunesFrost = "Givre"
 	L.RunesDeath = "Mort"
+	L.RunesOrientationHorizontal = "Horizontal"
+	L.RunesOrientationVertical = "Vertical"
+	L.RunesRunemap = "Ordre des runes"
+	L.RunesRunemapDesc = "Change l'ordre des runes"
+	L.RunesSlot = "Emplacement %d"
+	L.RunesSlotDesc = "Choisir la rune dans l'emplacement %d"
 
-	L.StaggerThresholdDesc = "Au dessus de cette value, le pourcentage de vie n'est pas affich\195\169"
+	L.StaggerThresholdDesc = "Au dessus de cette valeur, le pourcentage de vie n'est pas affich\195\169"
 	L.StaggerTextDesc = "Afficher la valeur de report courant"
-	--L.StaggerLight = GetSpellInfo(124275)
-	--L.StaggerModerate = GetSpellInfo(124274)
-	--L.StaggerHeavy = GetSpellInfo(124273)
+	--ALREADY LOCALIZED IN ENGLISH.LUA --L.StaggerLight = GetSpellInfo(124275)
+	--ALREADY LOCALIZED IN ENGLISH.LUA --L.StaggerModerate = GetSpellInfo(124274)
+	--ALREADY LOCALIZED IN ENGLISH.LUA --L.StaggerHeavy = GetSpellInfo(124273)
 
 	L.TankshieldDurationDesc = "Afficher la dur\195\169e restante"
 
@@ -188,7 +199,7 @@ if GetLocale() == "frFR" then
 	L.PluginShortDescription_AURA = "Aura"
 	L.PluginDescription_AURA = "Affiche les charges d'une am\195\169lioration ou d'un affaiblissment"
 	L.PluginShortDescription_AURABAR = "Barre d'aura"
-	L.PluginDescription_AURABAR = "Affiche une barre avec le nombre de charges actuels, maximum ainsi que le temps restant d'une am\195\169lioration ou d'un affaiblissment"
+	L.PluginDescription_AURABAR = "Affiche une barre avec le nombre de charges actuels ainsi que le temps restant d'une am\195\169lioration ou d'un affaiblissment"
 	L.PluginShortDescription_RESOURCE = "Barre de ressource"
 	L.PluginDescription_RESOURCE = "Affiche une barre avec la ressource courante, change automatiquement avec la specialisation, la forme, la posture"
 	L.PluginShortDescription_COMBO = "Points de combo"
@@ -207,9 +218,9 @@ if GetLocale() == "frFR" then
 	L.PluginDescription_DOT = "Affiche une barre avec les d\195\169gats par tick d'un sort de d\195\169gats sur la dur\195\169e"
 	L.PluginShortDescription_TOTEMS = "Totems et champignons"
 	L.PluginDescription_TOTEMS = "Affiche les totems de chaman ou les champignons sauvages de druide"
-	--L.PluginShortDescription_BANDITSGUILE = select(1, GetSpellInfo(84654)) -- Bandit's Guile
+	--ALREADY LOCALIZED IN ENGLISH.LUA --L.PluginShortDescription_BANDITSGUILE = select(1, GetSpellInfo(84654)) -- Bandit's Guile
 	L.PluginDescription_BANDITSGUILE = "Affiche les charges de Ruse du bandit pour les voleurs combat"
-	--L.PluginShortDescription_STAGGER =  select(1, GetSpellInfo(124255)) -- Stagger
+	--ALREADY LOCALIZED IN ENGLISH.LUA --L.PluginShortDescription_STAGGER =  select(1, GetSpellInfo(124255)) -- Stagger
 	L.PluginDescription_STAGGER = "Affiche une barre avec la valeur courante et total de Report, ainsi qu'un pourcentage par rapport \195\160 la vie totale"
 	L.PluginShortDescription_TANKSHIELD = "Bouclier de tank"
 	L.PluginDescription_TANKSHIELD = "Affiche une barre pour les tanks avec le montant restant que le bouclier peut absorber, ainsi que le temps restant"
@@ -223,4 +234,6 @@ if GetLocale() == "frFR" then
 	L.PluginDescription_RECHARGEBAR = "Affiche une barre avec le nombre courant et total de charge plus le temps restant d'un sort \195\160 temps de recharge avec charges comme la Roulade du moine ou la D\195\169fense sauvage du druide"
 	L.PluginShortDescription_CD = "Cooldown"
 	L.PluginDescription_CD = "Affiche une barre avec le nom et le temps de recharge restant d'un sort \195\160 temps de recharge"
+	L.PluginShortDescription_STATUE = "Barre de statue/ghoule/puit de lumi\195\168re et banni\195\168re"
+	L.PluginDescription_STATUE = "Display a bar with timeleft/uptime of monk statue, DK ghoul, priest lightwell and warrior's banner"
 end
