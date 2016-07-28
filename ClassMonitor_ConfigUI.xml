@@ -13,6 +13,7 @@
 	<Script file="definitions\plugins\default.lua"/>
 
 	<Script file="definitions\plugins\aura.lua"/>
+	<Script file="definitions\plugins\arcane.lua"/>
 	<Script file="definitions\plugins\aurabar.lua"/>
 	<Script file="definitions\plugins\power.lua"/>
 	<Script file="definitions\plugins\combo.lua"/>
@@ -21,11 +22,8 @@
 	<Script file="definitions\plugins\runes.lua"/>
 	<Script file="definitions\plugins\eclipse.lua"/>
 	<Script file="definitions\plugins\totems.lua"/>
-	<Script file="definitions\plugins\burningembers.lua"/>
-	<Script file="definitions\plugins\demonicfury.lua"/>
 	<Script file="definitions\plugins\dot.lua"/>
 	<Script file="definitions\plugins\energize.lua"/>
-	<Script file="definitions\plugins\banditsguile.lua"/>
 	<Script file="definitions\plugins\stagger.lua"/>
 	<Script file="definitions\plugins\tankshield.lua"/>
 	<Script file="definitions\plugins\recharge.lua"/>

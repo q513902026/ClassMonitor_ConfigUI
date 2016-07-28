@@ -1,27 +1,19 @@
--- Bandit's Guile plugin
+-- Arcane blast plugin
 local ADDON_NAME, Engine = ...
 if not Engine.Enabled then return end
 local UI = Engine.UI
 
-if UI.MyClass ~= "ROGUE" then return end -- meaningless for non-rogue
+--if UI.MyClass ~= "MAGE" then return end
 
+local CheckSpec = Engine.CheckSpec
 local PixelPerfect = Engine.PixelPerfect
 local DefaultBoolean = Engine.DefaultBoolean
 local GetColor = Engine.GetColor
 
 --
-local plugin = Engine:NewPlugin("BANDITSGUILE")
+local plugin = Engine:NewPlugin("ARCANE")
 
-local shallowInsight = GetSpellInfo(84745)
-local moderateInsight = GetSpellInfo(84746)
-local deepInsight = GetSpellInfo(84747)
-
-local DefaultColors = {
-	{0.33, 0.63, 0.33, 1}, -- shallow
-	{0.65, 0.63, 0.35, 1}, -- moderate
-	{0.69, 0.31, 0.31, 1}, -- deep
-}
-
+local DefaultColors = UI.ClassColor()
 
 -- own methods
 function plugin:UpdateVisibility(event)
@@ -31,24 +23,21 @@ function plugin:UpdateVisibility(event)
 	else
 		inCombat = false
 	end
-	if (self.settings.autohide == false or inCombat) and GetSpecialization() == 2 then -- only in combat spec
-		self:RegisterUnitEvent("UNIT_AURA", "player", plugin.UpdateValue)
-		self:UpdateValue() -- at least one update
+	if (self.settings.autohide == false or inCombat) and CheckSpec(self.settings.specs) then
 		self.frame:Show()
+		self:UpdateValue()
 	else
-		self:UnregisterEvent("UNIT_AURA")
 		self.frame:Hide()
 	end
 end
 
 function plugin:UpdateValue()
-	local _, _, _, shallow = UnitBuff("player", shallowInsight, nil, "HELPFUL")
-	local _, _, _, moderate = UnitBuff("player", moderateInsight, nil, "HELPFUL")
-	local _, _, _, deep = UnitBuff("player", deepInsight, nil, "HELPFUL")
-	if shallow or moderate or deep then
-		if shallow then self.points[1]:Show() end
-		if moderate then self.points[2]:Show() end
-		if deep then self.points[3]:Show() end
+--print("aa")
+	local points = UnitPower("player", 16)
+--print(tostring(points))
+	if points and points > 0 then
+		for i = 1, points do self.points[i]:Show() end
+		for i = points+1, self.count do self.points[i]:Hide() end
 	else
 		for i = 1, self.count do self.points[i]:Hide() end
 	end
@@ -82,7 +71,7 @@ function plugin:UpdateGraphics()
 		point:Size(width, height)
 		point:ClearAllPoints()
 		if i == 1 then
-			point:Point("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+			point:Point("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		else
 			point:Point("LEFT", self.points[i-1], "RIGHT", spacing, 0)
 		end
@@ -99,6 +88,7 @@ function plugin:UpdateGraphics()
 			point:SetBackdropBorderColor(unpack(UI.BorderColor))
 		else
 			point:SetBackdropBorderColor(unpack(color))
+			--point:SetBackdropColor(1, 0, 1, 1) just a test
 			if point.status then point.status:Hide() end
 		end
 	end
@@ -109,9 +99,9 @@ function plugin:Initialize()
 	-- set defaults
 	self.settings.filled = DefaultBoolean(self.settings.filled, false)
 	self.settings.colors = self.settings.colors or DefaultColors
-	--
-	self.count = 3
-	--
+
+	self.count = 4
+
 	self:UpdateGraphics()
 end
 
@@ -121,12 +111,14 @@ function plugin:Enable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", plugin.UpdateVisibility)
 	self:RegisterEvent("PLAYER_TARGET_CHANGED", plugin.UpdateVisibility)
 	self:RegisterUnitEvent("PLAYER_SPECIALIZATION_CHANGED", "player", plugin.UpdateVisibility)
+	--self:RegisterEvent("UNIT_MAXPOWER", plugin.SetCounts)
+	
+	self:RegisterUnitEvent("UNIT_POWER", "player", plugin.UpdateValue)
 end
 
 function plugin:Disable()
-	--
 	self:UnregisterAllEvents()
-	--
+
 	self.frame:Hide()
 end
 

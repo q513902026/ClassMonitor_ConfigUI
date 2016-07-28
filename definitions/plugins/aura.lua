@@ -1,186 +1,140 @@
+-- Aura plugin
 local ADDON_NAME, Engine = ...
+if not Engine.Enabled then return end
+local UI = Engine.UI
 
-local L = Engine.Locales
-local D = Engine.Definitions
+local CheckSpec = Engine.CheckSpec
+local PixelPerfect = Engine.PixelPerfect
+local DefaultBoolean = Engine.DefaultBoolean
+local GetColor = Engine.GetColor
 
--- Definition
---[[
-local default = {1, 1, 1}
+--
+local plugin = Engine:NewPlugin("AURA")
 
-local config = {
-	colorKind = "AUTOMATIC", -- AUTOMATIC | SINGLE | MULTI
-	color = { 1, 1, 1 },
-	colors = nil
-}
-
-local function __TestGetKind(info)
-	if config.colorKind == "AUTOMATIC" then
-print("DISABLING COLORS")
-		info.arg.parent.args.colors.disabled = true
-		info.arg.parent.args.colors.hidden = true
-	elseif config.colorKind == "SINGLE" then
-		info.arg.parent.args.colors.disabled = false
-		info.arg.parent.args.colors.hidden = false
-		-- disable each color except first one
-		for k, v in pairs(info.arg.parent.args.colors.args) do
-			if k ~= "1" then
-print("DISABLING:"..tostring(v.name))
-				v.disabled = true
-				v.hidden = true
-			else
-print("ENABLING:"..tostring(v.name))
-				v.disabled = false
-				v.hidden = false
-			end
-		end
-	elseif config.colorKind == "MULTI" then
-		info.arg.parent.args.colors.disabled = false
-		info.arg.parent.args.colors.hidden = false
-		-- enable each color
-		for k, v in pairs(info.arg.parent.args.colors.args) do
-print("ENABLING:"..tostring(v.name))
-			v.disabled = false
-			v.hidden = false
-		end
-	end
-	return config.colorKind
-end
-
-local function __TestSetKind(info, value)
-print("__TestSetMonocolor:"..tostring(value))
-	--colors = { colors[1] }
-	config.colorKind = value
-	if config.colorKind == "MULTI" and not config.colors then
-		config.colors = {}
-		for i = 1, 5 do
-			config.colors[i] = config.color or default
-		end
-	elseif config.colorKind == "SINGLE" and not config.color then
-		if config.colors then
-			config.color = config.colors[1]
-		else
-			config.color = default
-		end
-	end
-end
-
-local function __TestGetColor(info)
-print("__TestGetColor:"..tostring(info[#info]))
-	if config.colorKind == "SINGLE" then
-		return unpack(config.color or default)
-	elseif config.colorKind == "MULTI" then
-		local index = tonumber(info[#info])
-		return unpack((config.colors and config.colors[index]) or config.color or default)
-	end
-end
-
-local function __TestSetColor(info, r, g, b)
-print("__TestSetColor:"..tostring(info[#info]))
-	if config.colorKind == "SINGLE" then
-		config.color = {r, g, b}
+-- own methods
+function plugin:UpdateVisibility(event)
+	local inCombat = true
+	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
+		inCombat = true
 	else
-		local index = tonumber(info[#info])
-		config.colors = config.colors or {}
-		config.colors[index] = {r, g, b}
+		inCombat = false
+	end
+	if (self.settings.autohide == false or inCombat) and CheckSpec(self.settings.specs) then
+		self:RegisterUnitEvent("UNIT_AURA", self.settings.unit, plugin.UpdateValue)
+		self:UpdateValue() -- at least one update
+		self.frame:Show()
+	else
+		self:UnregisterEvent("UNIT_AURA")
+		self.frame:Hide()
 	end
 end
 
-local __TestDefinition = {
-	key = "colors",
-	name = "TEST",
-	desc = "TEST",
-	type = "group",
-	guiInline = true,
-	args = {
-		kind = {
-			name = "kind",
-			desc = "kind",
-			order = 1,
-			type = "select",
-			get = __TestGetKind,
-			set = __TestSetKind,
-			values = {
-				["AUTOMATIC"] = "automatic",
-				["SINGLE"] = "single",
-				["MULTI"] = "multi",
-			}
-		},
-		colors = {
-			name = "colors",
-			desc = "colors",
-			order = 2,
-			type = "group",
-			guiInline = true,
-			get = __TestGetColor,
-			set = __TestSetColor,
-			args = {
-				["1"] = {
-					order = 1,
-					name = "1",
-					type = "color",
-				},
-				["2"] = {
-					order = 2,
-					name = "2",
-					type = "color",
-				},
-				["3"] = {
-					order = 3,
-					name = "3",
-					type = "color",
-				},
-				["4"] = {
-					order = 4,
-					name = "4",
-					type = "color",
-				},
-				["5"] = {
-					order = 5,
-					name = "5",
-					type = "color",
-				},
-			}
-		}
-	},
-	disabled = D.Helpers.IsPluginDisabled
-}
---]]
+function plugin:UpdateValue()
+	if not self.auraName then return end
+	local name, _, _, stack, _, _, expirationTime, unitCaster = UnitAura(self.settings.unit, self.auraName, nil, self.settings.filter)
+	if name == self.auraName and (unitCaster == "player" or (self.settings.unit == "pet" and unitCaster == "pet")) and stack > 0 then
+		assert(stack <= self.settings.count, "Too many stacks:"..tostring(stack)..", maximum has been set to "..tostring(self.settings.count))
+		for i = 1, stack do self.stacks[i]:Show() end
+		for i = stack+1, self.settings.count do self.stacks[i]:Hide() end
+	else
+		for i = 1, self.settings.count do self.stacks[i]:Hide() end
+	end
+end
 
-local options = {
-	[1] = D.Helpers.Description,
-	[2] = D.Helpers.Name,
-	[3] = D.Helpers.DisplayName,
-	[4] = D.Helpers.Kind,
-	[5] = D.Helpers.Enabled,
-	[6] = D.Helpers.Autohide,
-	[7] = D.Helpers.WidthAndHeight,
-	[8] = D.Helpers.Specs,
-	[9] = D.Helpers.Unit,
-	[10] = D.Helpers.Spell,
-	[11] = D.Helpers.Filter,
-	[12] = {
-		key = "count",
-		name = L.AuraCount,
-		desc = L.AuraCountDesc,
-		type = "range",
-		min = 1, max = 10, step = 1,
-		get = D.Helpers.GetValue,
-		set = D.Helpers.SetValue,
-		disabled = D.Helpers.IsPluginDisabled
-	},
-	[13] = {
-		key = "filled",
-		name = L.Filled,
-		desc = L.AuraFilledDesc,
-		type = "toggle",
-		get = D.Helpers.GetValue,
-		set = D.Helpers.SetValue,
-		disabled = D.Helpers.IsPluginDisabled
-	},
-	-- TODO: colors
-	[15] = D.Helpers.Anchor,
-	[16] = D.Helpers.AutoGridAnchor,
---	[0] = __TestDefinition
-}
+function plugin:UpdateGraphics()
+	-- Create a frame including every stacks
+	local frame = self.frame
+	if not frame then
+		frame = CreateFrame("Frame", self.name, UI.PetBattleHider)
+		frame:Hide()
+		self.frame = frame
+	end
+	local frameWidth = self:GetWidth()
+	local height = self:GetHeight()
+	frame:ClearAllPoints()
+	frame:Point(unpack(self:GetAnchor()))
+	frame:Size(frameWidth, height)
+	-- Create stacks
+	local width, spacing = PixelPerfect(frameWidth, self.settings.count)
+	self.stacks = self.stacks or {}
+	for i = 1, self.settings.count do
+		local stack = self.stacks[i]
+		if not stack then
+			stack = CreateFrame("Frame", nil, self.frame)
+			stack:SetTemplate()
+			stack:SetFrameStrata("BACKGROUND")
+			stack:Hide()
+			self.stacks[i] = stack
+		end
+		stack:Size(width, height)
+		stack:ClearAllPoints()
+		if i == 1 then
+			stack:Point("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+		else
+			stack:Point("LEFT", self.stacks[i-1], "RIGHT", spacing, 0)
+		end
+		if self.settings.filled == true and not stack.status then
+			stack.status = CreateFrame("StatusBar", nil, stack)
+			stack.status:SetStatusBarTexture(UI.NormTex)
+			stack.status:SetFrameLevel(6)
+			stack.status:SetInside()
+		end
+		local color = GetColor(self.settings.colors, i, UI.ClassColor())
+		if self.settings.filled == true then
+			stack.status:SetStatusBarColor(unpack(color))
+			stack.status:Show()
+			stack:SetBackdropBorderColor(unpack(UI.BorderColor))
+		else
+			stack:SetBackdropBorderColor(unpack(color))
+			if stack.status then stack.status:Hide() end
+		end
+	end
+end
 
-D.Helpers:NewPluginDefinition("AURA", options, L.PluginShortDescription_AURA, L.PluginDescription_AURA)
+-- overridden methods
+function plugin:Initialize()
+	-- set defaults
+	self.settings.unit = self.settings.unit or "player"
+	self.settings.filled = DefaultBoolean(self.settings.filled, false)
+	self.settings.count = self.settings.count or 1
+	self.settings.filter = self.settings.filter or "HELPFUL"
+	self.settings.colors = self.settings.colors or self.settings.color or UI.ClassColor()
+	-- no default for spellID
+	--
+	self.auraName = GetSpellInfo(self.settings.spellID)
+	--
+	self:UpdateGraphics()
+end
+
+function plugin:Enable()
+	self:RegisterEvent("PLAYER_ENTERING_WORLD", plugin.UpdateVisibility)
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", plugin.UpdateVisibility)
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", plugin.UpdateVisibility)
+	if self.settings.unit == "focus" then self:RegisterEvent("PLAYER_FOCUS_CHANGED", plugin.UpdateVisibility) end
+	if self.settings.unit == "target" then self:RegisterEvent("PLAYER_TARGET_CHANGED", plugin.UpdateVisibility) end
+	if self.settings.unit == "pet" then self:RegisterUnitEvent("UNIT_PET", "player", plugin.UpdateVisibility) end
+	self:RegisterUnitEvent("PLAYER_SPECIALIZATION_CHANGED", "player", plugin.UpdateVisibility)
+
+	--self:RegisterUnitEvent("UNIT_AURA", unit, plugin.UpdateValue)
+end
+
+function plugin:Disable()
+	--
+	self:UnregisterAllEvents()
+	--
+	self.frame:Hide()
+end
+
+function plugin:SettingsModified()
+	--
+	self:Disable()
+	--
+	self.auraName = GetSpellInfo(self.settings.spellID)
+	--
+	self:UpdateGraphics()
+	--
+	if self.settings.enabled == true then
+		self:Enable()
+		self:UpdateVisibility()
+	end
+end
