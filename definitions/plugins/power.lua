@@ -33,16 +33,16 @@ local options = {
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
-	[10] = {
-		key = "count",
-		name = L.PowerCount,
-		desc = L.PowerCountDesc,
-		type = "range",
-		min = 1, max = 20, step = 1,
-		get = D.Helpers.GetValue,
-		set = D.Helpers.SetValue,
-		disabled = D.Helpers.IsPluginDisabled
-	},
+--	[10] = {
+--		key = "count",
+--		name = L.PowerCount,
+--		desc = L.PowerCountDesc,
+--		type = "range",
+--		min = 1, max = 20, step = 1,
+--		get = D.Helpers.GetValue,
+--		set = D.Helpers.SetValue,
+--		disabled = D.Helpers.IsPluginDisabled
+--	},
 	[11] = {
 		key = "filled",
 		name = L.Filled,
