@@ -1,3 +1,6 @@
+* 1.2.0
+    1. Merge from SinaC/master
+
 * 1.1.1
     1. now can work with Tukui
 	2. fix Slider texture
