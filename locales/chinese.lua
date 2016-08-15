@@ -165,6 +165,7 @@ if GetLocale() == "zhCN" then
 	L.PowerCount = "最大能量数"
 	L.PowerCountDesc = "最大能量数"
 	L.PowerFilledDesc = "填充/不填充"
+	L.ComboBorderRemindDesc = "能量点边框是否一直显示"
 
 	L.RechargeTextDesc = "显示充能的剩余时间"
 

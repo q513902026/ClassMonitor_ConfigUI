@@ -166,6 +166,7 @@ L.PowerValueShadowOrbs = "Shadow Orbs"
 L.PowerCount = "Maximum power count"
 L.PowerCountDesc = "Maximum power count"
 L.PowerFilledDesc = "Power filled or not"
+L.ComboBorderRemindDesc = "Power points border display forever or not"
 
 L.RechargeTextDesc = "Display time left on active charge"
 
