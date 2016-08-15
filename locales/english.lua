@@ -18,6 +18,7 @@ L.CurrentValue = "Current value"
 L.TimeLeft = "Time left"
 L.Duration = "Duration"
 L.Filled = "Filled"
+L.BorderRemind = "BorderRemind"
 L.Count = "Count"
 L.Colors = "Colors"
 L.BarColor = "Bar color"
@@ -133,6 +134,7 @@ L.CDTextDesc = "Display spell name"
 L.CDDurationDesc = "Display time left"
 
 L.ComboFilledDesc = "Combo points filled or not"
+L.ComboBorderRemindDesc = "Combo points border display forever or not"
 
 L.DemonicfuryTextDesc = "Display current demonic fury value"
 
@@ -164,6 +166,7 @@ L.PowerValueShadowOrbs = "Shadow Orbs"
 L.PowerCount = "Maximum power count"
 L.PowerCountDesc = "Maximum power count"
 L.PowerFilledDesc = "Power filled or not"
+L.ComboBorderRemindDesc = "Power points border display forever or not"
 
 L.RechargeTextDesc = "Display time left on active charge"
 

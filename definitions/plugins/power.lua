@@ -33,16 +33,16 @@ local options = {
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
-	[10] = {
-		key = "count",
-		name = L.PowerCount,
-		desc = L.PowerCountDesc,
-		type = "range",
-		min = 1, max = 20, step = 1,
-		get = D.Helpers.GetValue,
-		set = D.Helpers.SetValue,
-		disabled = D.Helpers.IsPluginDisabled
-	},
+--	[10] = {
+--		key = "count",
+--		name = L.PowerCount,
+--		desc = L.PowerCountDesc,
+--		type = "range",
+--		min = 1, max = 20, step = 1,
+--		get = D.Helpers.GetValue,
+--		set = D.Helpers.SetValue,
+--		disabled = D.Helpers.IsPluginDisabled
+--	},
 	[11] = {
 		key = "filled",
 		name = L.Filled,
@@ -61,9 +61,18 @@ local options = {
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
+	[13] = {
+		key = "borderRemind",
+		name = L.BorderRemind,
+		desc = L.ComboBorderRemindDesc,
+		type = "toggle",
+		get = D.Helpers.GetValue,
+		set = D.Helpers.SetValue,
+		disabled = D.Helpers.IsPluginDisabled
+	},
 	-- TODO: colors
-	[13] = D.Helpers.Anchor,
-	[14] = D.Helpers.AutoGridAnchor,
+	[14] = D.Helpers.Anchor,
+	[15] = D.Helpers.AutoGridAnchor,
 }
 
 D.Helpers:NewPluginDefinition("POWER", options, L.PluginShortDescription_POWER, L.PluginDescription_POWER)

@@ -19,6 +19,7 @@ if GetLocale() == "zhCN" then
 	L.TimeLeft = "剩余时间"
 	L.Duration = "持续时间"
 	L.Filled = "填充"
+	L.BorderRemind = "始终显示边框"
 	L.Count = "数量"
 	L.Colors = "颜色"
 	L.BarColor = "监视条颜色"
@@ -131,6 +132,7 @@ if GetLocale() == "zhCN" then
 	L.CDDurationDesc = "显示剩余时间"
 
 	L.ComboFilledDesc = "连击点填充/不填充"
+	L.ComboBorderRemindDesc = "连击点边框是否一直显示"
 
 	L.DemonicfuryTextDesc = "显示当前的恶魔之怒的数值"
 
@@ -163,6 +165,7 @@ if GetLocale() == "zhCN" then
 	L.PowerCount = "最大能量数"
 	L.PowerCountDesc = "最大能量数"
 	L.PowerFilledDesc = "填充/不填充"
+	L.ComboBorderRemindDesc = "能量点边框是否一直显示"
 
 	L.RechargeTextDesc = "显示充能的剩余时间"
 
