@@ -1,3 +1,6 @@
+* 1.2.1
+    1. Add borderRemind feature
+
 * 1.2.0
     1. Merge from SinaC/master
 
