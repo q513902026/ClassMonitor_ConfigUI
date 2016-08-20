@@ -1,3 +1,7 @@
+* 1.2.2
+    1. Now almost all plugins can set color except PowerBar
+    2. Fix totems error
+
 * 1.2.1
     1. Add borderRemind feature
 

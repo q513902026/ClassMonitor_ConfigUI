@@ -3,6 +3,8 @@ local ADDON_NAME, Engine = ...
 local L = Engine.Locales
 local D = Engine.Definitions
 
+local color = D.Helpers.CreateColorsDefinition("color", 1, {L.BarColor})
+
 local powerTypes = {
 	[SPELL_POWER_HOLY_POWER] = L.PowerValueHolyPower,
 	[SPELL_POWER_SOUL_SHARDS] = L.PowerValueSoulShards,
@@ -70,9 +72,9 @@ local options = {
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
-	-- TODO: colors
-	[14] = D.Helpers.Anchor,
-	[15] = D.Helpers.AutoGridAnchor,
+	[14] = color,
+	[15] = D.Helpers.Anchor,
+	[16] = D.Helpers.AutoGridAnchor,
 }
 
 D.Helpers:NewPluginDefinition("POWER", options, L.PluginShortDescription_POWER, L.PluginDescription_POWER)
