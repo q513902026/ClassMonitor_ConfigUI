@@ -4,6 +4,7 @@ local L = Engine.Locales
 local D = Engine.Definitions
 
 local colors = D.Helpers.CreateColorsDefinition("colors", 3, {L.StaggerLight, L.StaggerModerate, L.StaggerHeavy} )
+
 local options = {
 	[1] = D.Helpers.Description,
 	[2] = D.Helpers.Name,
@@ -31,9 +32,19 @@ local options = {
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
 	},
-	[10] = colors,
-	[11] = D.Helpers.Anchor,
-	[12] = D.Helpers.AutoGridAnchor,
+	[10] = {
+		key = "textSize",
+		name = L.CurrentValue,
+		desc = L.StaggerTextDesc,
+		type = "range",
+		min = 1, max = 100, step = 1,
+		get = D.Helpers.GetValue,
+		set = D.Helpers.SetValue,
+		disabled = D.Helpers.IsPluginDisabled
+	},
+	[11] = colors,
+	[12] = D.Helpers.Anchor,
+	[13] = D.Helpers.AutoGridAnchor,
 }
 
 D.Helpers:NewPluginDefinition("STAGGER", options, L.PluginShortDescription_STAGGER, L.PluginDescription_STAGGER)
