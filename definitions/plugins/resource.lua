@@ -34,9 +34,19 @@ local options = {
 	[9] = D.Helpers.Specs,
 	[10] = {
 		key = "text",
-		name = L.CurrentValue,
+		name = L.Text,
 		desc = L.ResourceTextDesc,
 		type = "toggle",
+		get = D.Helpers.GetValue,
+		set = D.Helpers.SetValue,
+		disabled = D.Helpers.IsPluginDisabled
+	},
+	[11] = {
+		key = "textSize",
+		name = L.TextSize,
+		desc = L.TextSizeDesc,
+		type = "range",
+		min = 10, max = 24, step = 2,
 		get = D.Helpers.GetValue,
 		set = D.Helpers.SetValue,
 		disabled = D.Helpers.IsPluginDisabled
