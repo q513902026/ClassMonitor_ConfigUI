@@ -15,6 +15,8 @@ if GetLocale() == "zhCN" then
 	L.PluginNameAlreadyExists = "模组%s已存在"
 	L.Threshold = "阈值"
 	L.Text = "文本"
+	L.TextSize = "字体大小"
+	L.TextSizeDesc = "文本大小"
 	L.CurrentValue = "当前值"
 	L.TimeLeft = "剩余时间"
 	L.Duration = "持续时间"
