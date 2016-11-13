@@ -126,6 +126,10 @@ L.AurabarDurationDesc = "Display aura time left"
 L.AurabarColor = "Bar color"
 L.AurabarShowspellname = "Aura name"
 L.AurabarShowspellnameDesc = "Display aura name"
+L.AurabarCountFromOther = "Count from another or not"
+L.AurabarCountFromOtherDesc = "Will display another spell's count"
+L.AurabarCountSpellID = "Count origin spell ID"
+L.AurabarCountSpellIDDesc = "Count from which spell"
 
 L.BanditsGuileShallow = GetSpellInfo(84745)
 L.BanditsGuileModerate = GetSpellInfo(84746)

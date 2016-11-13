@@ -124,6 +124,10 @@ if GetLocale() == "zhCN" then
 	L.AurabarColor = "监视条颜色"
 	L.AurabarShowspellname = "光环名称"
 	L.AurabarShowspellnameDesc = "显示光环名称"
+	L.AurabarCountFromOther = "另外的计数来源"
+	L.AurabarCountFromOtherDesc = "显示的计数来自其他法术"
+	L.AurabarCountSpellID = "计数光环名称"
+	L.AurabarCountSpellIDDesc = "计数光环名称"
 
 	L.BanditsGuileShallow = GetSpellInfo(84745)
 	L.BanditsGuileModerate = GetSpellInfo(84746)
