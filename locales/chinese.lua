@@ -77,6 +77,9 @@ if GetLocale() == "zhCN" then
 	L.FilterValueHelpful = "Buff"
 	L.FilterValueHarmful = "Debuff"
 
+	L.Reverse = "反转"
+	L.ReverseDesc = "将增长方向从向右变为向左"
+
 	L.Unit = "单位"
 	L.UnitDesc = "要监视的单位"
 	L.UnitValuePlayer = "玩家"

@@ -3,6 +3,32 @@ local ADDON_NAME, Engine = ...
 local L = Engine.Locales
 local D = Engine.Definitions
 
+local function ValidateSpellID(info, value)
+	local asNumber = tonumber(value)
+	if asNumber and type(asNumber) == "number" then
+		local spellName = GetSpellInfo(asNumber)
+		if not spellName then
+			return L.InvalidSpellID
+		else
+			return true
+		end
+	else
+		return L.MustBeANumber
+	end
+end
+
+local function GetSpellName(info)
+	local spellID = tonumber(D.Helpers.GetValue(info) or 0)
+	local spellName = GetSpellInfo(spellID)
+	return spellName or "Invalid"
+end
+
+local function GetSpellIcon(info)
+	local spellID = tonumber(D.Helpers.GetValue(info) or 0)
+	local _, _, icon = GetSpellInfo(spellID)
+	return icon or "INTERFACE/ICONS/INV_MISC_QUESTIONMARK"
+end
+
 local color = D.Helpers.CreateColorsDefinition("color", 1, { L.BarColor })
 local options = {
     [1] = D.Helpers.Description,
@@ -33,17 +59,17 @@ local options = {
         type = "group",
         guiInline = true,
         args = {
-            spellID = {
+            countSpellID = {
                 order = 1,
-                name = L.SpellSpellID,
-                desc = L.SpellSpellIDDesc,
+                name = L.AurabarCountSpellID,
+                desc = L.AurabarCountSpellID,
                 type = "input",
                 validate = ValidateSpellID,
                 --get = GetSpellIDAndSetSpellIcon,
                 get = D.Helpers.GetNumberValue,
                 set = D.Helpers.SetNumberValue, --D.Helpers.SetValue,
             },
-            spellIcon = {
+            countSpellIcon = {
                 order = 3,
                 name = GetSpellName, --"Invalid",
                 type = "description",

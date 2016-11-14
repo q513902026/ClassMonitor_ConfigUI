@@ -424,7 +424,7 @@ D.Helpers.Spell = {
 		},
 		--]]
 		spellIcon = {
-			order = 3,
+			order = 2,
 			name = GetSpellName, --"Invalid",
 			type = "description",
 			--image = "INTERFACE/ICONS/INV_MISC_QUESTIONMARK",
