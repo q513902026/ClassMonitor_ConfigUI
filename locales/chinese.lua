@@ -208,8 +208,10 @@ if GetLocale() == "zhCN" then
 
 	L.TankshieldDurationDesc = "显示护盾剩余时间"
 
-	L.TotemsCountDesc = "图腾/蘑菇数量"
-	L.TotemsTextDesc = "显示每根图腾/每个蘑菇的剩余时间"
+	L.TotemsCountDesc = "图腾/仆从数量"
+	L.TotemsTextDesc = "显示每根图腾/每个仆从的剩余时间"
+	L.TotemsEfflorescence = "1(奶德百花齐放)"
+	L.TotemsShaman = "4(萨满图腾/恶魔术仆从)"
 
 	--------
 	L.PluginShortDescription_AURA = "光环堆叠"
@@ -232,10 +234,10 @@ if GetLocale() == "zhCN" then
 	L.PluginDescription_HEALTH = "为玩家/目标/宠物/焦点提供一个生命值监视条"
 	L.PluginShortDescription_DOT = "DoT监视条"
 	L.PluginDescription_DOT = "在一个监视条上显示每一跳DoT的时间点"
-	L.PluginShortDescription_TOTEMS = "图腾和蘑菇"
-	L.PluginDescription_TOTEMS = "显示萨满图腾或德鲁伊野性蘑菇"
+	L.PluginShortDescription_TOTEMS = "图腾或百花"
+	L.PluginDescription_TOTEMS = "显示萨满图腾或德鲁伊百花齐放"
 	--ALREADY LOCALIZED IN ENGLISH.LUA --L.PluginShortDescription_BANDITSGUILE = select(1, GetSpellInfo(84654)) -- 盗匪之诈
-	L.PluginDescription_BANDITSGUILE = "显示战斗贼盗匪之诈的堆叠层数"
+--	L.PluginDescription_BANDITSGUILE = "显示战斗贼盗匪之诈的堆叠层数"
 	--ALREADY LOCALIZED IN ENGLISH.LUA --L.PluginShortDescription_STAGGER =  select(1, GetSpellInfo(124255)) -- 醉拳
 	L.PluginDescription_STAGGER = "显示当前酿酒武僧的醉拳值，以及醉拳伤害相对于生命值的百分比"
 	L.PluginShortDescription_TANKSHIELD = "坦克护盾"

@@ -208,6 +208,8 @@ L.TankshieldDurationDesc = "Display shield time left"
 
 L.TotemsCountDesc = "Totem/mushrooms count"
 L.TotemsTextDesc = "Display time left on each totem/mushroom"
+L.TotemsEfflorescence = "1(Efflorescence)"
+L.TotemsShaman = "4(Shaman‘s totems)"
 
 --------
 L.PluginShortDescription_AURA = "Aura stacks"
@@ -230,10 +232,10 @@ L.PluginShortDescription_HEALTH = "Health bar"
 L.PluginDescription_HEALTH = "Display a health bar for player or target or focus or pet"
 L.PluginShortDescription_DOT = "Dot bar"
 L.PluginDescription_DOT = "Display a bar showing last tick damage for dot"
-L.PluginShortDescription_TOTEMS = "Totems and mushrooms"
-L.PluginDescription_TOTEMS = "Display totems for shaman or wild mushrooms for druid"
-L.PluginShortDescription_BANDITSGUILE = select(1, GetSpellInfo(84654)) -- Bandit's Guile
-L.PluginDescription_BANDITSGUILE = "Display stacks of bandit's guile for combat rogue"
+L.PluginShortDescription_TOTEMS = "Totems or Efflorescence"
+L.PluginDescription_TOTEMS = "Display totems for shaman or efflorescence for druid"
+--L.PluginShortDescription_BANDITSGUILE = select(1, GetSpellInfo(84654)) -- Bandit's Guile
+--L.PluginDescription_BANDITSGUILE = "Display stacks of bandit's guile for combat rogue"
 L.PluginShortDescription_STAGGER =  select(1, GetSpellInfo(124255)) -- Stagger
 L.PluginDescription_STAGGER = "Display a bar with current stagger value and health percentage of staggered damage"
 L.PluginShortDescription_TANKSHIELD = "Tank shield"

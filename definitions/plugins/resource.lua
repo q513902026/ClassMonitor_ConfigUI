@@ -14,6 +14,8 @@ local function IsHideIfMaxDisabled(info)
 	return false
 end
 
+local color = D.Helpers.CreateColorsDefinition("color", 1, {L.BarColor})
+
 local options = {
 	[1] = D.Helpers.Description,
 	[2] = D.Helpers.Name,
