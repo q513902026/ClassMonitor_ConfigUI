@@ -1,3 +1,7 @@
+* 1.2.5
+    1. Update rune
+    2. fix bugs
+
 * 1.2.4
     1. Add Reap Souls AuraBar as default of Warlock
 

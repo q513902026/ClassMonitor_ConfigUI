@@ -197,6 +197,10 @@ if GetLocale() == "zhCN" then
 	L.RunesRunemapDesc = "改变符文排列顺序"
 	L.RunesSlot = "栏位%d"
 	L.RunesSlotDesc = "选择符文放置在%d"
+	L.RuneDuration = "符文冷却时间"
+	L.RuneDurationDesc = "是否显示符文冷却时间"
+	L.RuneDurationSize = "字体大小"
+	L.RuneDurationSizeDesc = "符文冷却时间的显示字体大小"
 
 	L.StaggerThresholdDesc = "超过此值则不显示生命值百分比"
 	L.StaggerTextDesc = "显示当前醉拳值"
