@@ -1,3 +1,6 @@
+* 1.3.0
+    1. Add destruction warlock soul shard support
+
 * 1.2.5
     1. Update rune
     2. fix bugs

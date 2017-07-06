@@ -1,6 +1,6 @@
-## Interface: 70100
-## Version: 1.2.5
-## Author: SinaC
+## Interface: 70200
+## Version: 1.3.0
+## Author: SinaC, hxldxx99
 ## Credits: Elv, Starinnia, Puffina
 ## Title: |cFF148587Class|r Monitor Config
 ## Notes: Config for ClassMonitor
