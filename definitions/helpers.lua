@@ -9,7 +9,7 @@ D.Helpers = {}
 ----------------------------------------------------------------------------------------
 function D.Helpers:NewPluginDefinition(pluginName, definition, shortDescription, longDescription)
 	if Engine.Definitions[pluginName] then return false end
---print("ADD PLUGIN DEFINITION:"..tostring(pluginName).."  "..tostring(shortDescription))
+print("ADD PLUGIN DEFINITION:"..tostring(pluginName).."  "..tostring(shortDescription))
 	Engine.Definitions[pluginName] = definition
 	Engine.Descriptions[pluginName] = {short = shortDescription, long = longDescription}
 --print(tostring(Engine.Descriptions[pluginName].short).."  "..tostring(Engine.Descriptions[pluginName].long))
@@ -166,6 +166,7 @@ local function GetKindValues()
 		kindValues = {}
 		if G.GetPluginListFunction and type(G.GetPluginListFunction) == "function" then
 			local pluginList = G:GetPluginListFunction()
+--		print("pluginList:"..tostring(pluginList).."")
 			for kind in pairs(pluginList) do
 --print("KIND:"..tostring(kind).."  "..tostring(Engine.Descriptions[kind]["short"]).."  "..tostring(Engine.Descriptions[kind]["long"]))
 				kindValues[kind] = Engine.Descriptions[kind].short or kind
